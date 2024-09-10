@@ -10,18 +10,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-wood-pattern bg-repeat text-copper-100">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-screen bg-wood-pattern bg-repeat text-copper-100 font-gruppo">
         <header className="flex justify-between p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md">
-          <div className="flex items-center">
-            <img
-              src="/snakelogo.svg"
-              alt="Hoop Snake Logo"
-              className="h-12 neon-glow"
-            />
-            <h1 className="ml-4 text-2xl font-bold font-medieval neon-text">
-              Hoop Snake Designs
-            </h1>
-          </div>
+          <h1 className="text-2xl font-bold neon-text">Hoop Snake Designs</h1>
           <nav className="flex gap-4">
             <a href="#about" className="hover:text-neon-cyan transition-colors">
               About

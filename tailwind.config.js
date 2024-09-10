@@ -17,6 +17,9 @@ module.exports = {
       backgroundImage: {
         'wood-pattern': "url('/images/woodBoard1024_2.png')",
       },
+      fontFamily: {
+        gruppo: ['Gruppo', 'sans-serif'],
+      },
     },
   },
   plugins: [],
