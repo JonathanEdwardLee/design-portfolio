@@ -1,27 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --color-copper-100: #ffd0b0;
+  --color-copper-300: #e6a972;
+  --color-neon-cyan: #0ff;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-copper-100);
+  font-family: 'Arial', sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.font-medieval {
+  font-family: 'MedievalSharp', cursive;
+}
+
+.neon-text {
+  color: var(--color-neon-cyan);
+  text-shadow: 0 0 5px var(--color-neon-cyan),
+               0 0 10px var(--color-neon-cyan),
+               0 0 15px var(--color-neon-cyan),
+               0 0 20px var(--color-neon-cyan);
+}
+
+.neon-glow {
+  filter: drop-shadow(0 0 5px var(--color-neon-cyan))
+          drop-shadow(0 0 10px var(--color-neon-cyan));
+}
+
+@layer components {
+  .btn-copper {
+    @apply bg-copper-300 text-black hover:bg-copper-100 transition-colors;
   }
+}
+
+/* Add this at the end of your globals.css file */
+.force-bg-wood {
+  background-image: url('/images/woodBoard1024_2.png') !important;
+  background-repeat: repeat !important;
 }
