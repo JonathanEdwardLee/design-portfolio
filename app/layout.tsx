@@ -4,8 +4,21 @@ import "./globals.css";
 import SpaceBackground from "./components/SpaceBackground";
 
 export const metadata: Metadata = {
-  title: "Hoop Snake Designs",
-  description: "Cyberpunk medieval design services",
+  title:
+    "Hoop Snake Designs | Graphic, Audio, and Web Design Services in Springfield, MO",
+  description:
+    "Professional audio, graphic, and web design services in Springfield, Missouri. Specializing in budget-friendly designs for local businesses.",
+  keywords:
+    "design services, Springfield MO, audio design, graphic design, web design",
+  openGraph: {
+    title: "Hoop Snake Designs | Springfield MO Design Services",
+    description:
+      "Professional audio, graphic, and web design services in Springfield, Missouri.",
+    url: "https://www.hoopsnakedesigns.com",
+    siteName: "Hoop Snake Designs",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -25,26 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="min-h-screen text-copper-100 font-gruppo">
         <SpaceBackground />
-        <header className="flex justify-between p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md">
-          <h1 className="text-2xl font-bold neon-text">Hoop Snake Designs</h1>
-          <nav className="flex gap-4">
-            <a href="#about" className="hover:text-neon-cyan transition-colors">
-              About
-            </a>
-            <a
-              href="#projects"
-              className="hover:text-neon-cyan transition-colors"
-            >
-              Projects
-            </a>
-            <a
-              href="#contact"
-              className="hover:text-neon-cyan transition-colors"
-            >
-              Contact
-            </a>
-          </nav>
-        </header>
+        {/* Removed the header with navigation */}
         <main>{children}</main>
         <footer className="p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md text-center text-copper-300">
           © 2024 Hoop Snake Designs
