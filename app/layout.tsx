@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
+import SpaceBackground from "./components/SpaceBackground";
 
 export const metadata: Metadata = {
   title: "Hoop Snake Designs",
@@ -22,7 +23,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-wood-pattern bg-repeat text-copper-100 font-gruppo">
+      <body className="min-h-screen text-copper-100 font-gruppo">
+        <SpaceBackground />
         <header className="flex justify-between p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md">
           <h1 className="text-2xl font-bold neon-text">Hoop Snake Designs</h1>
           <nav className="flex gap-4">

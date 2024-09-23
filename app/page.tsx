@@ -4,7 +4,13 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
-import AnimatedLogo from "./components/AnimatedLogo";
+import { SnakeLogoWrapper } from "./components/SnakeLogoWrapper";
+import dynamic from "next/dynamic";
+
+const SnakeLogo3D = dynamic(
+  () => import("./components/SnakeLogo3D").then((mod) => mod.SnakeLogo3D),
+  { ssr: false }
+);
 
 export default function Home() {
   const services = [
@@ -23,9 +29,9 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-wood-pattern bg-repeat">
+    <main className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <AnimatedLogo />
+        <SnakeLogoWrapper />
 
         <h1 className="text-4xl font-bold text-center mb-8 neon-text">
           Hoop Snake Designs
