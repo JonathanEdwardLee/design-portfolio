@@ -5,12 +5,17 @@ import dynamic from "next/dynamic";
 
 import { AnimatedServiceCard } from "./components/AnimatedServiceCard";
 import { AIDesignAssistant } from "./components/AIDesignAssistant";
-import { SEOSection } from "./components/SEOSection";
+import { withAnimation } from "./components/WithAnimation";
+import { AboutSection } from "./components/AboutSection";
+import { DesignAssistantSection } from "./components/DesignAssistantSection";
 
 const SnakeLogo3D = dynamic(
   () => import("./components/SnakeLogo3D").then((mod) => mod.SnakeLogo3D),
   { ssr: false }
 );
+
+const AnimatedAboutSection = withAnimation(AboutSection);
+const AnimatedDesignAssistantSection = withAnimation(DesignAssistantSection);
 
 export default function Home() {
   const services = [
@@ -36,7 +41,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <div className="container mx-auto px-16 sm:px-20 md:px-24 lg:px-32 py-20 md:py-24 lg:py-28">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-24 md:py-28 lg:py-32">
         <h1 className="text-6xl font-bold text-center mb-20 neon-text">
           Hoop Snake Designs
         </h1>
@@ -59,7 +64,29 @@ export default function Home() {
           </AnimatedServiceCard>
         ))}
 
-        <SEOSection />
+        <div className="text-center text-neon-cyan neon-text flashing-arrow mb-20">
+          <span>About</span>
+          <svg
+            className="arrow-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 21l-12-18h24z" />
+          </svg>
+        </div>
+        <AnimatedAboutSection />
+
+        <div className="text-center text-neon-cyan neon-text flashing-arrow mb-20">
+          <span>Get A Quote</span>
+          <svg
+            className="arrow-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 21l-12-18h24z" />
+          </svg>
+        </div>
+        <AnimatedDesignAssistantSection />
       </div>
     </main>
   );

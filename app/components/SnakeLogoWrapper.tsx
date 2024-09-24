@@ -47,6 +47,16 @@ export function SnakeLogoWrapper() {
         Click to {interactionEnabled ? "TURN OFF" : "TURN ON"} interaction with
         the 3D Hoop Snake
       </button>
+      <div className="mt-20 text-neon-cyan neon-text flashing-arrow">
+        <span>Services</span>
+        <svg
+          className="arrow-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 21l-12-18h24z" />
+        </svg>
+      </div>
     </div>
   );
 }
