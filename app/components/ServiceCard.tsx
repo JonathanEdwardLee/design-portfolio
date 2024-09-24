@@ -22,15 +22,17 @@ export function ServiceCard({
           </h2>
           <p className="text-copper-300 mb-4">{description}</p>
         </div>
-        <div className="md:w-1/2">
-          <div className="mb-4">
-            <img
-              src={gifUrl}
-              alt={`${title} demonstration`}
-              className="w-full h-auto rounded-lg"
-            />
+        <div className="md:w-1/2 flex flex-col items-center">
+          <div className="mb-4 w-full max-w-xs">
+            <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+              <img
+                src={gifUrl}
+                alt={`${title} demonstration`}
+                className="object-cover w-full h-full"
+              />
+            </div>
           </div>
-          {children}
+          <div className="w-full">{children}</div>
         </div>
       </div>
     </div>
