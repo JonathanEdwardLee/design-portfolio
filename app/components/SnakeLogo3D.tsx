@@ -1,12 +1,21 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { GLTF } from "three-stdlib";
 import * as THREE from "three";
 
+type GLTFResult = GLTF & {
+  nodes: {
+    [key: string]: THREE.Mesh;
+  };
+  materials: {
+    [key: string]: THREE.Material;
+  };
+};
+
 export function SnakeLogo3D() {
-  const { scene } = useGLTF("/models/snake_logo.glb") as any;
+  const { scene } = useGLTF("/models/snake_logo.glb") as GLTFResult;
 
   return (
     <primitive

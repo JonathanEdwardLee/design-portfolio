@@ -1,3 +1,5 @@
+import React from "react";
+import Image from "next/image";
 import { ReactNode } from "react";
 
 interface ServiceCardProps {
@@ -7,7 +9,7 @@ interface ServiceCardProps {
   children: ReactNode;
 }
 
-export function ServiceCard({
+const ServiceCard = React.memo(function ServiceCard({
   title,
   description,
   gifUrl,
@@ -16,14 +18,18 @@ export function ServiceCard({
   return (
     <div className="mb-12 bg-cyan-500 bg-opacity-5 backdrop-filter backdrop-blur-sm rounded-lg overflow-hidden shadow-lg p-6 max-w-4xl mx-auto">
       <div className="flex flex-col md:flex-row">
-        <div className="md:w-1/2 flex flex-col items-center">
-          <div className="mb-4 w-full max-w-xs">
-            <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-              <img
+        <div className="md:w-1/2 flex flex-col items-center justify-center">
+          <div className="w-full h-full">
+            <div className="relative w-full h-0 pb-[56.25%]">
+              <Image
                 src={gifUrl}
                 alt={`${title} demonstration`}
-                className="object-cover w-full h-full"
+                fill
                 style={{ objectFit: "cover" }}
+                className="rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                unoptimized
               />
             </div>
           </div>
@@ -38,4 +44,6 @@ export function ServiceCard({
       </div>
     </div>
   );
-}
+});
+
+export default ServiceCard;

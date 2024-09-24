@@ -2,6 +2,13 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import SpaceBackground from "./components/SpaceBackground";
+import { Gruppo } from "next/font/google";
+
+const gruppo = Gruppo({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title:
@@ -23,22 +30,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen text-copper-100 font-gruppo">
+    <html lang="en" className={gruppo.className}>
+      <body className="min-h-screen text-copper-100">
         <SpaceBackground />
-        {/* Removed the header with navigation */}
         <main>{children}</main>
         <footer className="p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md text-center text-copper-300">
           © 2024 Hoop Snake Designs

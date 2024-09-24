@@ -1,22 +1,20 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ServiceCard } from "./ServiceCard";
+import ServiceCard from "./ServiceCard";
 
 interface AnimatedServiceCardProps {
   title: string;
   description: string;
   gifUrl: string;
   children: React.ReactNode;
-  index: number;
 }
 
-export function AnimatedServiceCard({
+export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
   title,
   description,
   gifUrl,
   children,
-  index,
 }: AnimatedServiceCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -57,4 +55,4 @@ export function AnimatedServiceCard({
       </ServiceCard>
     </div>
   );
-}
+});

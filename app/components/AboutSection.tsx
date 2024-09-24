@@ -7,13 +7,18 @@ export function AboutSection() {
   return (
     <section className="bg-cyan-500 bg-opacity-5 backdrop-filter backdrop-blur-sm rounded-lg overflow-hidden shadow-lg p-6 mb-12 max-w-4xl mx-auto">
       <div className="flex flex-col md:flex-row mb-8">
-        <div className="md:w-1/2 flex flex-col items-center">
-          <div className="mb-4 w-full max-w-xs">
-            <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-              <img
+        <div className="md:w-1/2 flex flex-col items-center justify-center">
+          <div className="w-full h-full">
+            <div className="relative w-full h-0 pb-[56.25%]">
+              <Image
                 src="/images/about.gif"
                 alt="About demonstration"
-                className="object-cover w-full h-full"
+                fill
+                style={{ objectFit: "cover" }}
+                className="rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                unoptimized
               />
             </div>
           </div>
@@ -45,9 +50,9 @@ export function AboutSection() {
             design services tailored to businesses in Springfield and beyond. I
             understand the unique needs of local companies, offering my services
             across downtown Springfield, Commercial Street, Battlefield, and the
-            surrounding areas. Whether you're based in Greene County or nearby
-            in Christian, Webster, or Polk counties, my goal is to help your
-            business stand out and succeed.
+            surrounding areas. Whether you&apos;re based in Greene County or
+            nearby in Christian, Webster, or Polk counties, my goal is to help
+            your business stand out and succeed.
           </p>
         </div>
         <div className="md:w-1/2 flex justify-center items-center mt-6 md:mt-0">
@@ -58,18 +63,20 @@ export function AboutSection() {
           >
             <Image
               src="/images/JonathanDarkBlue.png"
-              alt="Jonathan Dark Blue"
-              layout="fill"
-              objectFit="cover"
+              alt="Jonathan Edward Lee"
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, 256px"
               className={`transition-opacity duration-300 ${
                 isHovered ? "opacity-0" : "opacity-100"
               }`}
             />
             <Image
               src="/images/JonathanLightBlue.png"
-              alt="Jonathan Light Blue"
-              layout="fill"
-              objectFit="cover"
+              alt="Jonathan Edward Lee"
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, 256px"
               className={`transition-opacity duration-300 ${
                 isHovered ? "opacity-100" : "opacity-0"
               }`}
