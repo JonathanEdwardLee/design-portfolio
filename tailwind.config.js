@@ -20,8 +20,16 @@ module.exports = {
       fontFamily: {
         gruppo: ['Gruppo', 'sans-serif'],
       },
+      dropShadow: {
+        'neon-cyan': '0 0 15px rgba(0, 255, 255, 0.9)',
+      },
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      dropShadow: ['hover'],
+    },
+  },
 }
 

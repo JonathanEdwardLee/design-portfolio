@@ -10,14 +10,14 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {label && (
         <label className="mb-1 text-sm font-medium text-copper-100">
           {label}
         </label>
       )}
       <input
-        className={`px-3 py-2 bg-black bg-opacity-30 border border-copper-300 rounded-md text-copper-100 placeholder-copper-300/50 focus:outline-none focus:ring-2 focus:ring-neon-cyan transition-all duration-300 ${className}`}
+        className={`w-full border-none ring-0 bg-transparent text-copper-100 placeholder-copper-300/70 px-4 py-2 focus:outline-none ${className}`}
         {...props}
       />
     </div>

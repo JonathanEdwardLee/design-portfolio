@@ -27,6 +27,11 @@ body {
           drop-shadow(0 0 10px var(--color-neon-cyan));
 }
 
+.neon-button-glow:hover {
+  filter: drop-shadow(0 0 5px var(--color-neon-cyan))
+          drop-shadow(0 0 10px var(--color-neon-cyan));
+}
+
 @layer components {
   .btn-copper {
     @apply bg-copper-300 text-black hover:bg-copper-100 transition-colors;
