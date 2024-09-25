@@ -6,6 +6,8 @@ import { useChat } from "../hooks/useChat";
 import { AIDesignAssistant } from "../components/AIDesignAssistant";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default function ProjectBlueprint() {
   const searchParams = useSearchParams();
   const idea = searchParams.get("idea");

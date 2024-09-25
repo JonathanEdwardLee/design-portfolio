@@ -1,8 +1,14 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+console.log("API route hit");
+
+console.log("API Key:", process.env.OPENAI_API_KEY);
+console.log("Org ID:", process.env.OPENAI_ORG_ID);
+console.log("API Key length:", process.env.OPENAI_API_KEY?.length);
+console.log("API Key prefix:", process.env.OPENAI_API_KEY?.substring(0, 7));
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   organization: process.env.OPENAI_ORG_ID,
 });
 
