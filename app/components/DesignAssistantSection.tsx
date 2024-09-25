@@ -1,16 +1,12 @@
 import Image from "next/image";
 import { AIDesignAssistant } from "./AIDesignAssistant";
 import { useRouter } from "next/navigation";
-import { useChat } from "../hooks/useChat";
 
 export function DesignAssistantSection() {
   const router = useRouter();
-  const { sendMessage } = useChat();
 
   const handleSendMessage = async (message: string) => {
-    console.log(message); // Keep this for debugging
-    await sendMessage(message);
-    router.push(`/project-blueprint?service=general`);
+    router.push(`/project-blueprint?idea=${encodeURIComponent(message)}`);
   };
 
   return (

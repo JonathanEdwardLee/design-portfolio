@@ -5,10 +5,11 @@ interface Message {
   content: string;
 }
 
-export function useChat(initialMessage?: string) {
+export function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isComplete, setIsComplete] = useState(false);
 
   const sendMessage = useCallback(async (content: string) => {
     setIsLoading(true);
@@ -30,7 +31,13 @@ export function useChat(initialMessage?: string) {
       }
 
       const data = await response.json();
-      setMessages([...newMessages, data.result]);
+      const assistantMessage = data.result;
+      setMessages([...newMessages, assistantMessage]);
+
+      // Check if the conversation is complete
+      if (assistantMessage.content.toLowerCase().includes("thank you for providing all the necessary information")) {
+        setIsComplete(true);
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       setError(
@@ -41,11 +48,5 @@ export function useChat(initialMessage?: string) {
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (initialMessage) {
-      sendMessage(initialMessage);
-    }
-  }, [initialMessage, sendMessage]);
-
-  return { messages, sendMessage, isLoading, error };
+  return { messages, sendMessage, isLoading, error, isComplete };
 }

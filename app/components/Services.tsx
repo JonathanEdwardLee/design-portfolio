@@ -5,7 +5,6 @@ import { LazyLoadSection } from "./LazyLoadSection";
 import { AnimatedServiceCard } from "./AnimatedServiceCard";
 import { AIDesignAssistant } from "./AIDesignAssistant";
 import { useRouter } from "next/navigation";
-import { useChat } from "../hooks/useChat";
 
 interface Service {
   title: string;
@@ -37,7 +36,6 @@ const servicesData: Service[] = [
 export function Services() {
   const [services, setServices] = useState<Service[]>([]);
   const router = useRouter();
-  const { sendMessage } = useChat();
 
   useEffect(() => {
     setServices(servicesData);
@@ -45,9 +43,10 @@ export function Services() {
 
   const handleSendMessage = async (message: string, serviceTitle: string) => {
     console.log(message); // Keep this for debugging
-    await sendMessage(message);
     router.push(
-      `/project-blueprint?service=${encodeURIComponent(serviceTitle)}`
+      `/project-blueprint?idea=${encodeURIComponent(
+        message
+      )}&service=${encodeURIComponent(serviceTitle)}`
     );
   };
 

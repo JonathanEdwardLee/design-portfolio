@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={gruppo.className}>
-      <body className="min-h-screen text-copper-100">
+      <body className={`min-h-screen text-copper-100 ${gruppo.className}`}>
         <SpaceBackground />
         <main>{children}</main>
         <footer className="p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md text-center text-copper-300">
