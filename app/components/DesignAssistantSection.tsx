@@ -18,9 +18,9 @@ export function DesignAssistantSection({
         to streamline the process. Simply describe the type of service you need,
         and the assistant will guide you through refining the details of your
         project. Get an instant quote based on your budget and timeline. Whether
-        it's graphic design, web design, or audio production, my AI assistant
-        ensures your project stays on track. Try it now to explore your options
-        and receive a personalized estimate!
+        it&apos;s graphic design, web design, or audio production, my AI
+        assistant ensures your project stays on track. Try it now to explore
+        your options and receive a personalized estimate!
       </Text>
       <div className="mt-4">
         <Button onClick={onOpenChat}>Chat with AI Assistant</Button>
