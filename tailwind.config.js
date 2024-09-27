@@ -14,22 +14,8 @@ module.exports = {
         },
         'neon-cyan': '#0ff',
       },
-      backgroundImage: {
-        'wood-pattern': "url('/images/woodBoard1024_2.png')",
-      },
-      fontFamily: {
-        gruppo: ['Gruppo', 'sans-serif'],
-      },
-      dropShadow: {
-        'neon-cyan': '0 0 15px rgba(0, 255, 255, 0.9)',
-      },
     },
   },
   plugins: [],
-  variants: {
-    extend: {
-      dropShadow: ['hover'],
-    },
-  },
 }
 

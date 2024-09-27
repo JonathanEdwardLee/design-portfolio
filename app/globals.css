@@ -7,10 +7,36 @@
   --color-copper-100: #ffd0b0;
   --color-copper-300: #e6a972;
   --color-neon-cyan: #0ff;
+  --font-gruppo: 'Gruppo', sans-serif;
 }
 
 body {
   color: var(--color-copper-100);
+  font-family: var(--font-gruppo);
+  font-size: 1.125rem; /* Increase base font size */
+  
+}
+
+/* Override Radix UI font and increase text size */
+.radix-themes {
+  --default-font-family: var(--font-gruppo);
+  --font-size-1: 14px;
+  --font-size-2: 16px;
+  --font-size-3: 18px;
+  --font-size-4: 20px;
+  --font-size-5: 24px;
+  --font-size-6: 30px;
+  --font-size-7: 36px;
+  --font-size-8: 48px;
+  --font-size-9: 60px;
+  
+}
+
+/* Add this new rule */
+.radix-themes, .radix-themes *, .rt-Card, .rt-CardInner, .rt-Heading, .rt-Text, .rt-Button,
+h1, h2, h3, h4, h5, h6,
+p, span, div {
+  font-family: var(--font-gruppo) !important;
 }
 
 .neon-text {
@@ -61,3 +87,4 @@ body {
   height: 2rem; /* Adjust the size as needed */
   fill: var(--color-neon-cyan);
 }
+

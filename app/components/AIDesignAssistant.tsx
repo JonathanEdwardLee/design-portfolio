@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { Button } from "./ui/button";
+import { Button } from "@radix-ui/themes";
 import { Send } from "lucide-react";
 import { useChat } from "../hooks/useChat";
+import { TextField } from "@mui/material"; // Add this import at the top of the file
 
 interface AIDesignAssistantProps {
   placeholder: string;
@@ -14,21 +15,17 @@ export const AIDesignAssistant: React.FC<AIDesignAssistantProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState("");
   const { messages, isLoading, error, isComplete } = useChat();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLDivElement>(null);
 
-  const adjustTextareaHeight = () => {
+  useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  };
-
-  useEffect(() => {
-    adjustTextareaHeight();
   }, [inputValue]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
   };
 
   const handleSubmit = async () => {
@@ -41,7 +38,7 @@ export const AIDesignAssistant: React.FC<AIDesignAssistantProps> = ({
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
@@ -72,19 +69,19 @@ export const AIDesignAssistant: React.FC<AIDesignAssistantProps> = ({
       </div>
       {!isComplete && (
         <div className="relative flex items-center bg-cyan-500 bg-opacity-10 rounded-md">
-          <textarea
+          <TextField
             ref={textareaRef}
             value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
+            onChange={(e) => handleInputChange(e.target.value)}
             placeholder={placeholder}
-            className="w-full border-none ring-0 bg-transparent text-copper-100 placeholder-copper-300/70 px-3 py-2 pr-12 resize-none overflow-hidden"
-            style={{ minHeight: "2.5rem", height: "auto" }}
             disabled={isLoading}
-            rows={1}
+            style={{ minHeight: "2.5rem", height: "auto" }}
+            onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) =>
+              handleKeyPress(e)
+            }
           />
           <Button
-            variant="secondary"
+            variant="ghost"
             className="absolute right-1 top-1/2 transform -translate-y-1/2 text-neon-cyan neon-glow bg-transparent p-1 hover:bg-transparent focus:bg-transparent"
             onClick={handleSubmit}
             disabled={isLoading}

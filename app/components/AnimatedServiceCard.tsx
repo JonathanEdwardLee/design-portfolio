@@ -2,19 +2,22 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import { Box } from "@radix-ui/themes";
 
 interface AnimatedServiceCardProps {
   title: string;
   description: string;
+  imageUrl: string; // Add this line
   gifUrl: string;
-  children: React.ReactNode;
+  onOpenChat: () => void; // Changed from onClick to onOpenChat
 }
 
 export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
   title,
   description,
+  imageUrl, // Add this line
   gifUrl,
-  children,
+  onOpenChat, // Changed from onClick to onOpenChat
 }: AnimatedServiceCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -26,7 +29,7 @@ export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
       const cardPosition = cardRef.current.offsetTop;
       const windowHeight = window.innerHeight;
       const scrollPosition = window.scrollY;
-      const scrollTrigger = cardPosition - windowHeight + 200; // Adjust this value to change when the card appears
+      const scrollTrigger = cardPosition - windowHeight + 200;
 
       if (scrollPosition > scrollTrigger) {
         setIsVisible(true);
@@ -36,7 +39,7 @@ export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check visibility on mount
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -44,15 +47,19 @@ export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
   }, []);
 
   return (
-    <div
+    <Box
       ref={cardRef}
       className={`transition-all duration-300 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
       }`}
     >
-      <ServiceCard title={title} description={description} gifUrl={gifUrl}>
-        {children}
-      </ServiceCard>
-    </div>
+      <ServiceCard
+        title={title}
+        description={description}
+        imageUrl={imageUrl} // Add this line
+        gifUrl={gifUrl} // Add this line
+        onOpenChat={onOpenChat} // Changed from onClick to onOpenChat
+      />
+    </Box>
   );
 });

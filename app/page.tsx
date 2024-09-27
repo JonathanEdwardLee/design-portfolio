@@ -1,16 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { SnakeLogoWrapper } from "./components/SnakeLogoWrapper";
 import { LazyLoadSection } from "./components/LazyLoadSection";
 import { withAnimation } from "./components/WithAnimation";
 import { AboutSection } from "./components/AboutSection";
 import { DesignAssistantSection } from "./components/DesignAssistantSection";
 import { Services } from "./components/Services";
+import AIChatWindow from "./components/AIChatWindow";
 
 const AnimatedAboutSection = withAnimation(AboutSection);
 const AnimatedDesignAssistantSection = withAnimation(DesignAssistantSection);
 
 export default function Page() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const handleOpenChat = () => {
+    setIsChatOpen(true);
+  };
+
   return (
     <main className="min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-12 md:pt-16 lg:pt-20 pb-24 md:pb-28 lg:pb-32">
@@ -22,7 +30,7 @@ export default function Page() {
           <SnakeLogoWrapper />
         </div>
 
-        <Services />
+        <Services onOpenChat={handleOpenChat} />
 
         <div className="text-center text-neon-cyan neon-text flashing-arrow mb-20">
           <span>About</span>
@@ -51,9 +59,10 @@ export default function Page() {
         </div>
 
         <LazyLoadSection>
-          <AnimatedDesignAssistantSection />
+          <AnimatedDesignAssistantSection onOpenChat={handleOpenChat} />
         </LazyLoadSection>
       </div>
+      <AIChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </main>
   );
 }
