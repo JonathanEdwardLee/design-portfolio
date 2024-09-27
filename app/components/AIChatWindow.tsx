@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Dialog, Flex, Text, Button } from "@radix-ui/themes";
 import { TextField } from "@mui/material"; // Add this import at the top of the file
 import { useChat } from "../components/ChatContext";
@@ -24,27 +24,16 @@ const AIChatWindow: React.FC<AIChatWindowProps> = ({ isOpen, onClose }) => {
   const idea = searchParams.get("idea");
   const service = searchParams.get("service");
 
-  useEffect(() => {
-    if (idea && messages.length === 0) {
-      const designArea = service ? service.toLowerCase() : getDesignArea(idea);
-      const initialPrompt = getInitialPrompt(designArea, idea);
-      sendMessage(initialPrompt);
-    }
-  }, [idea, service, messages, sendMessage]);
+  const getDesignArea = useCallback(
+    (idea: string): "audio" | "graphic" | "web" => {
+      if (idea.toLowerCase().includes("audio")) return "audio";
+      if (idea.toLowerCase().includes("graphic")) return "graphic";
+      return "web";
+    },
+    []
+  );
 
-  const getDesignArea = (idea: string): "audio" | "graphic" | "web" => {
-    if (idea.toLowerCase().includes("audio")) return "audio";
-    if (idea.toLowerCase().includes("graphic")) return "graphic";
-    return "web";
-  };
-
-  const getInitialPrompt = (designArea: string, idea: string): string => {
-    return `User's idea for ${designArea} design: ${idea}\n\nAI: Thank you for sharing your ${designArea} design idea. I'm going to ask you a series of questions to better understand your project. Please provide detailed answers to help us create an accurate estimation.
-
-First question: ${getFirstQuestion(designArea)}`;
-  };
-
-  const getFirstQuestion = (designArea: string): string => {
+  const getFirstQuestion = useCallback((designArea: string): string => {
     switch (designArea) {
       case "audio":
         return "What kind of audio elements are you looking to incorporate in your project?";
@@ -54,7 +43,24 @@ First question: ${getFirstQuestion(designArea)}`;
       default:
         return "What key features or pages do you want to include in your website?";
     }
-  };
+  }, []);
+
+  const getInitialPrompt = useCallback(
+    (designArea: string, idea: string): string => {
+      return `User's idea for ${designArea} design: ${idea}\n\nAI: Thank you for sharing your ${designArea} design idea. I'm going to ask you a series of questions to better understand your project. Please provide detailed answers to help us create an accurate estimation.
+
+First question: ${getFirstQuestion(designArea)}`;
+    },
+    [getFirstQuestion]
+  );
+
+  useEffect(() => {
+    if (idea && messages.length === 0) {
+      const designArea = service ? service.toLowerCase() : getDesignArea(idea);
+      const initialPrompt = getInitialPrompt(designArea, idea);
+      sendMessage(initialPrompt);
+    }
+  }, [idea, service, messages, sendMessage, getDesignArea, getInitialPrompt]);
 
   const handleSend = async () => {
     if (input.trim()) {

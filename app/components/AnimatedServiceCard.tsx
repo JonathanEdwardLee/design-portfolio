@@ -56,7 +56,6 @@ export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
       <ServiceCard
         title={title}
         description={description}
-        imageUrl={imageUrl} // Add this line
         gifUrl={gifUrl} // Add this line
         onOpenChat={onOpenChat} // Changed from onClick to onOpenChat
       />

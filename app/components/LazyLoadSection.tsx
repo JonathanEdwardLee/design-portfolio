@@ -3,9 +3,11 @@ import { ReactNode } from "react";
 
 export function LazyLoadSection({ children }: { children: ReactNode }) {
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const observedElement = ref.current; // Capture the current value of ref
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -16,13 +18,13 @@ export function LazyLoadSection({ children }: { children: ReactNode }) {
       { rootMargin: "100px" }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (observedElement) {
+      observer.observe(observedElement);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (observedElement) {
+        observer.unobserve(observedElement);
       }
     };
   }, []);

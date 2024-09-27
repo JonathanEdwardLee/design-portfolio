@@ -6,13 +6,12 @@ import Button from "./Button";
 interface ServiceCardProps {
   title: string;
   description: string;
-  imageUrl: string;
   gifUrl: string;
   onOpenChat: () => void;
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = React.memo(
-  ({ title, description, imageUrl, gifUrl, onOpenChat }) => {
+  ({ title, description, gifUrl, onOpenChat }) => {
     return (
       <Card className="relative overflow-hidden">
         <div className="relative w-full h-64">

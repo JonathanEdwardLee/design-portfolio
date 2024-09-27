@@ -48,12 +48,11 @@ export function Services({ onOpenChat }: ServicesProps) {
     setServices(servicesData);
   }, []);
 
-  const handleServiceClick = (serviceTitle: string) => {
+  const handleServiceClick = () => {
     // Instead of navigating, we'll just open the chat
     onOpenChat();
-    // You might want to set some context for the chat based on the service selected
-    // For example, you could use a global state or context to store the selected service
-    // setSelectedService(serviceTitle);
+    // If you want to use the service title in the future, you can pass it as a parameter
+    // and use it here, e.g., to set some context for the chat
   };
 
   return (
@@ -66,7 +65,7 @@ export function Services({ onOpenChat }: ServicesProps) {
               description={service.description}
               imageUrl={service.imageUrl} // Add this line
               gifUrl={service.gifUrl}
-              onOpenChat={() => handleServiceClick(service.title)} // Change this line
+              onOpenChat={() => handleServiceClick()} // Remove the service.title argument
             />
           </LazyLoadSection>
         ))}
