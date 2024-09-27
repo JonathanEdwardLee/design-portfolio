@@ -94,8 +94,8 @@ export const AIDesignAssistant: React.FC<AIDesignAssistantProps> = ({
       {isComplete && (
         <div className="text-center text-copper-100">
           <p>
-            Thank you for providing all the necessary information. We'll review
-            your project details and get back to you soon.
+            Thank you for providing all the necessary information. We&apos;ll
+            review your project details and get back to you soon.
           </p>
         </div>
       )}

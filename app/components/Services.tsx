@@ -63,7 +63,6 @@ export function Services({ onOpenChat }: ServicesProps) {
             <AnimatedServiceCard
               title={service.title}
               description={service.description}
-              imageUrl={service.imageUrl} // Add this line
               gifUrl={service.gifUrl}
               onOpenChat={() => handleServiceClick()} // Remove the service.title argument
             />

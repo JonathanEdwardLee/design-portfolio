@@ -7,17 +7,15 @@ import { Box } from "@radix-ui/themes";
 interface AnimatedServiceCardProps {
   title: string;
   description: string;
-  imageUrl: string; // Add this line
   gifUrl: string;
-  onOpenChat: () => void; // Changed from onClick to onOpenChat
+  onOpenChat: () => void;
 }
 
 export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
   title,
   description,
-  imageUrl, // Add this line
   gifUrl,
-  onOpenChat, // Changed from onClick to onOpenChat
+  onOpenChat,
 }: AnimatedServiceCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -56,8 +54,8 @@ export const AnimatedServiceCard = React.memo(function AnimatedServiceCard({
       <ServiceCard
         title={title}
         description={description}
-        gifUrl={gifUrl} // Add this line
-        onOpenChat={onOpenChat} // Changed from onClick to onOpenChat
+        gifUrl={gifUrl}
+        onOpenChat={onOpenChat}
       />
     </Box>
   );
