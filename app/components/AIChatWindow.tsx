@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { Dialog, Flex, Text, Button } from "@radix-ui/themes";
 import { TextField } from "@mui/material"; // Add this import at the top of the file
 import { useChat } from "../components/ChatContext";
@@ -9,7 +9,10 @@ interface AIChatWindowProps {
   onClose: () => void;
 }
 
-const AIChatWindow: React.FC<AIChatWindowProps> = ({ isOpen, onClose }) => {
+const AIChatWindowContent: React.FC<AIChatWindowProps> = ({
+  isOpen,
+  onClose,
+}) => {
   const {
     messages,
     sendMessage,
@@ -190,6 +193,14 @@ First question: ${getFirstQuestion(designArea)}`;
         </Flex>
       </Dialog.Content>
     </Dialog.Root>
+  );
+};
+
+const AIChatWindow: React.FC<AIChatWindowProps> = (props) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AIChatWindowContent {...props} />
+    </Suspense>
   );
 };
 

@@ -7,6 +7,7 @@ import { withAnimation } from "./components/WithAnimation";
 import { AboutSection } from "./components/AboutSection";
 import { DesignAssistantSection } from "./components/DesignAssistantSection";
 import { Services } from "./components/Services";
+import { Suspense } from "react";
 import AIChatWindow from "./components/AIChatWindow";
 
 const AnimatedAboutSection = withAnimation(AboutSection);
@@ -62,7 +63,12 @@ export default function Page() {
           <AnimatedDesignAssistantSection onOpenChat={handleOpenChat} />
         </LazyLoadSection>
       </div>
-      <AIChatWindow isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <Suspense fallback={<div>Loading chat...</div>}>
+        <AIChatWindow
+          isOpen={isChatOpen}
+          onClose={() => setIsChatOpen(false)}
+        />
+      </Suspense>
     </main>
   );
 }
