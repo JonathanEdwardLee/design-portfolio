@@ -31,6 +31,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  icons: [
+    {
+      rel: "icon",
+      url: "/favicon/HoopSnakeVectorFavicon.svg",
+      type: "image/svg+xml",
+    },
+    { rel: "apple-touch-icon", url: "/favicon/HoopSnakeVectorFavicon.svg" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
