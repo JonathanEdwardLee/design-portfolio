@@ -6,6 +6,7 @@ import { Gruppo } from "next/font/google";
 import { Theme } from "@radix-ui/themes";
 import ChatWrapper from "./components/ChatWrapper";
 import { ChatProvider } from "./components/ChatContext";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const gruppo = Gruppo({
   weight: "400",
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ChatWrapper />
           </ChatProvider>
         </Theme>
+        <GoogleTagManager gtmId="G-X45GW26X65" />
       </body>
     </html>
   );
