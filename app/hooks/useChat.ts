@@ -10,6 +10,8 @@ export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isComplete, setIsComplete] = useState(false);
+  const [showEstimation, setShowEstimation] = useState(false);
+  const [currentStep, setCurrentStep] = useState('initial');
 
   const sendMessage = useCallback(async (content: string) => {
     setIsLoading(true);
@@ -34,7 +36,11 @@ export function useChat() {
       const assistantMessage = data.result;
       setMessages([...newMessages, assistantMessage]);
 
-      // Check if the conversation is complete
+      if (data.showEstimation) {
+        setShowEstimation(true);
+        setCurrentStep('getQuote');
+      }
+
       if (assistantMessage.content.toLowerCase().includes("thank you for providing all the necessary information")) {
         setIsComplete(true);
       }
@@ -48,5 +54,15 @@ export function useChat() {
     }
   }, [messages]);
 
-  return { messages, sendMessage, isLoading, error, isComplete };
+  return { 
+    messages, 
+    sendMessage, 
+    isLoading, 
+    error, 
+    isComplete, 
+    showEstimation, 
+    setShowEstimation,
+    currentStep,
+    setCurrentStep
+  };
 }

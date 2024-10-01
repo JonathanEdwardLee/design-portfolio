@@ -23,6 +23,10 @@ const nextConfig = {
     });
     return config;
   },
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI,
+    SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL,
+  },
 };
 
 export default nextConfig;

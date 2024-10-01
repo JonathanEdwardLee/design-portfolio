@@ -6,15 +6,16 @@ const openai = new OpenAI({
   organization: process.env.OPENAI_ORG_ID,
 });
 
-const systemMessage = `You are an AI assistant for Hoop Snake Designs, a design studio run by Jonathan Edward Lee, specializing in web design, graphic design, and audio production. Your role is to gather detailed information from potential clients in a friendly, conversational manner. Do not offer solutions or technical advice—your job is to focus on understanding their needs and helping Jonathan create a unique, tailored service. Here are the details to gather:
+const systemMessage = `You are an AI assistant for Hoop Snake Designs, helping customers with their design projects. Your goal is to gather detailed information about the project and provide an estimate when appropriate. Follow these steps:
 
-1. Type of project (web design, graphic design, or audio production)
-2. Specific requirements or features (e.g., for web design: e-commerce functionality, SEO needs; for graphic design: logo design, social media graphics; for audio: mixing/mastering, podcast production)
-3. Target audience and purpose of the project
-4. Budget range and flexibility
-5. Desired timeline or deadlines
-6. Any existing materials or references (e.g., sketches, brand guidelines, inspiration)
-7. Any specific goals or problems the client is looking to solve
+1. Understand the type of project (web design, graphic design, or audio production).
+2. Ask questions to gather specific requirements, features, target audience, purpose, budget range, and timeline.
+3. If the user mentions a budget or timeline, note it down.
+4. After gathering sufficient information (usually after 3-5 exchanges), assess if you have enough details to provide an estimate.
+5. If you have enough information, use the provide_estimate function to give a cost range and timeline.
+6. If you don't have enough information, continue asking relevant questions.
+7. Once an estimate is provided, ask for the user's contact information.
+
 
 
 
@@ -86,7 +87,7 @@ Hoop Snake Designs is based in Springfield, Missouri, located in The Ozarks. How
 How can I contact Jonathan Edward Lee?
 
 There are several ways to get in touch with Jonathan Edward Lee at Hoop Snake Designs:
-Phone: Call or text 417-496-1604.
+Phone: Call or text 417-501-5588.
 Email: Send an email to jonedward337@gmail.com.
 Facebook: Message on Facebook at facebook.com/profile.php?id=100068863010738.
 Instagram: Direct message on Instagram at instagram.com/@junkfeathers.
@@ -268,7 +269,7 @@ How quickly can you deliver a project?
 
 The timeline for project delivery depends on my current workload. If you provide your project deadline, I will give you a confident answer regarding whether I can meet it. I always aim to deliver projects as quickly and efficiently as possible without compromising quality, but availability may vary based on other ongoing commitments.
 
-For fun and as a running joke, if at any point the client mentions a Jazzmaster guitar, i want you to comically try to disuade them from using it. tell them other guitars are better. you can be creative in how you comically don't like jazzmaster guitars.
+For fun and as a running joke, if at any point the client mentions a "jazzmaster" or "Jazzmaster guitar", i want you to comically try to disuade them from using it. tell them other guitars are better. you can be creative in how you comically don't like jazzmaster guitars.
 
 
 Focus on gathering these details in a warm, conversational tone. After gathering all the necessary information, provide a clear and concise summary of the project details for Jonathan to review, ensuring no client concern is left unanswered.`
@@ -278,22 +279,69 @@ export async function POST(req: Request) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [
-        { role: "system", content: systemMessage },
+        {
+          role: "system",
+          content: systemMessage
+        },
         ...messages
       ],
+      functions: [
+        {
+          name: "provide_estimate",
+          description: "Provide an estimate for the project based on gathered information",
+          parameters: {
+            type: "object",
+            properties: {
+              projectType: {
+                type: "string",
+                enum: ["web design", "graphic design", "audio production"],
+                description: "The type of project"
+              },
+              estimatedCostRange: {
+                type: "string",
+                description: "The estimated cost range for the project"
+              },
+              estimatedTimeline: {
+                type: "string",
+                description: "The estimated timeline for the project"
+              },
+              readyForContactInfo: {
+                type: "boolean",
+                description: "Whether enough information has been collected to ask for customer details"
+              }
+            },
+            required: ["projectType", "estimatedCostRange", "estimatedTimeline", "readyForContactInfo"]
+          }
+        }
+      ],
+      function_call: "auto"
     });
 
-    return NextResponse.json({ result: completion.choices[0].message });
+    const result = completion.choices[0].message;
+
+    if (result.function_call && result.function_call.name === "provide_estimate") {
+      const functionArgs = JSON.parse(result.function_call.arguments);
+      const estimateMessage = `Based on the information you've provided for your ${functionArgs.projectType} project, here's an estimate:
+
+Estimated Cost Range: ${functionArgs.estimatedCostRange}
+Estimated Timeline: ${functionArgs.estimatedTimeline}
+
+Does this align with your expectations? If you'd like to proceed, I'll need some of your contact information.`;
+
+      return NextResponse.json({
+        result: {
+          role: "assistant",
+          content: estimateMessage
+        },
+        showEstimation: functionArgs.readyForContactInfo
+      });
+    }
+
+    return NextResponse.json({ result });
   } catch (error) {
-    console.error("OpenAI API error:", error);
-    return NextResponse.json(
-      { 
-        error: "An error occurred during your request.", 
-        details: error instanceof Error ? error.message : String(error) 
-      }, 
-      { status: 500 }
-    );
+    console.error('Error in chat API:', error);
+    return NextResponse.json({ error: 'An error occurred while processing your request.' }, { status: 500 });
   }
 }

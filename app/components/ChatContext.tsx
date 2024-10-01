@@ -19,10 +19,11 @@ interface ChatContextType {
   isLoading: boolean;
   error: string | null;
   isComplete: boolean;
-  questionCount: number;
   showEstimation: boolean;
-  setQuestionCount: (count: number) => void;
   setShowEstimation: (show: boolean) => void;
+  currentStep: string;
+  setCurrentStep: (step: string) => void;
+  resetChat: () => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -34,8 +35,8 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isComplete, setIsComplete] = useState(false);
-  const [questionCount, setQuestionCount] = useState(0);
   const [showEstimation, setShowEstimation] = useState(false);
+  const [currentStep, setCurrentStep] = useState("initial");
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -63,6 +64,12 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
         const assistantMessage = data.result;
         setMessages([...newMessages, assistantMessage]);
 
+        if (data.showEstimation) {
+          setShowEstimation(true);
+          setCurrentStep("getQuote");
+          console.log("Setting showEstimation to true");
+        }
+
         if (
           assistantMessage.content
             .toLowerCase()
@@ -84,6 +91,11 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
     [messages]
   );
 
+  const resetChat = () => {
+    setMessages([]);
+    // Reset any other relevant state variables
+  };
+
   return (
     <ChatContext.Provider
       value={{
@@ -92,10 +104,11 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
         isLoading,
         error,
         isComplete,
-        questionCount,
         showEstimation,
-        setQuestionCount,
         setShowEstimation,
+        currentStep,
+        setCurrentStep,
+        resetChat,
       }}
     >
       {children}
