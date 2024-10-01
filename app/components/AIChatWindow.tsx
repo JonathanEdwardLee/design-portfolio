@@ -1,8 +1,7 @@
 import React, { useState, Suspense } from "react";
 import { Dialog, Flex, Text, Button } from "@radix-ui/themes";
-import { TextField } from "@mui/material"; // Add this import at the top of the file
+import { TextField } from "@mui/material";
 import { useChat } from "../components/ChatContext";
-import { useSearchParams } from "next/navigation";
 import { Close, Refresh } from "@mui/icons-material";
 import { Link } from "@radix-ui/themes";
 import NextLink from "next/link";
@@ -38,13 +37,10 @@ const AIChatWindowContent: React.FC<AIChatWindowProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { messages, sendMessage, showEstimation, resetChat } = useChat();
-  const { isLoading } = useChat();
+  const { messages, sendMessage, showEstimation, resetChat, isLoading } =
+    useChat();
   const [input, setInput] = useState("");
   const [currentStep, setCurrentStep] = useState("initial");
-  const searchParams = useSearchParams();
-  const idea = searchParams.get("idea");
-  const service = searchParams.get("service");
 
   const [quoteData, setQuoteData] = useState({
     name: "",
@@ -383,7 +379,7 @@ We'll review your request and get back to you soon with a more accurate quote.`;
         ) : (
           <Flex direction="column" gap="2">
             <Text color="teal">
-              Let's gather some information for your quote:
+              Let&apos;s gather some information for your quote:
             </Text>
             <TextField
               fullWidth
@@ -431,7 +427,7 @@ We'll review your request and get back to you soon with a more accurate quote.`;
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Title>AI Design Assistant</Dialog.Title>
+        <Dialog.Title>Let my AI Chat Assistant help you!</Dialog.Title>
         <Flex
           direction="column"
           gap="3"
