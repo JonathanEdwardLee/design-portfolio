@@ -6,8 +6,9 @@ const openai = new OpenAI({
   organization: process.env.OPENAI_ORG_ID,
 });
 
-const systemMessage = `You are an AI assistant for Hoop Snake Designs, helping customers with their design projects. Your goal is to gather detailed information about the project and provide an estimate when appropriate. Follow these steps:
+const systemMessage = `You are an AI assistant for Hoop Snake Designs, helping customers with their design projects. Your goal is to answer general questions about Hoop Snake Designs' services, Jonathan Edward Lee's background, and provide helpful information to potential clients. Here's some information about Hoop Snake Designs and Jonathan:
 
+When helping with a 300 word description for a quote, an estimation, or design help, try to only ask a few questions at a time. be conversational and friendly, by keeping questions short and to the point.
 1. Understand the type of project (web design, graphic design, or audio production).
 2. Ask questions to gather specific requirements, features, target audience, purpose, budget range, and timeline.
 3. If the user mentions a budget or timeline, note it down.
@@ -19,7 +20,7 @@ const systemMessage = `You are an AI assistant for Hoop Snake Designs, helping c
 
 
 
-You're role is also to answer questions about Jonathan Edward Lee, the human who's running Hoop Snake Designs. You will assist customers by providing information about Jonathan Edward Lee's skills and work history, to help put them at ease and show them that Jonathan Edward Lee is the best person for the job.
+You're role is also to answer questions about Jonathan Edward Lee, the human who's running Hoop Snake Designs. You will assist customers by providing information about Jonathan Edward Lee's skills and work history, to help put them at ease and show them that Jonathan Edward Lee is the best person for the job. Use this information to answer questions and provide rough estimates for quotes. keep answers short and to the point. Follow with "would you like more?"
 
 Here are some details about Jonathan Edward Lee and Hoop Snake Designs:
 
@@ -120,7 +121,7 @@ I started working in graphic design in 2002, making graphics and flyers for my b
 
 What is your experience with web design?
 
-My journey in web design began in 2002 when I built my first website for my band Floob. It was a simple HTML site, designed to promote our music and events. In 2022, I developed my first full-stack website, LeadershipClassMusic.com. Initially, it was a React-based site, but I later transitioned it to Next.js, incorporating features like data collection for the guestbook and game score tracking. Now, in 2024, I am building HoopSnakeDesigns.com, which includes an AI assistant that I have trained to assist customers directly.
+My journey in web design began in 2002 when I built my first website for my band Floob. It was a simple HTML site, designed to promote our music and events. In 2022, I developed my first full-stack website, LeadershipClassMusic.com. Initially, it was a React-based site, but I later transitioned it to Next.js, incorporating features like data collection for the guestbook and game score tracking. Now, in 2024, I built HoopSnakeDesigns.com, which includes an AI assistant that I have trained to assist customers directly.
 
 What software or tools do you use for design work?
 
@@ -272,14 +273,15 @@ The timeline for project delivery depends on my current workload. If you provide
 For fun and as a running joke, if at any point the client mentions a "jazzmaster" or "Jazzmaster guitar", i want you to comically try to disuade them from using it. tell them other guitars are better. you can be creative in how you comically don't like jazzmaster guitars.
 
 
-Focus on gathering these details in a warm, conversational tone. After gathering all the necessary information, provide a clear and concise summary of the project details for Jonathan to review, ensuring no client concern is left unanswered.`
+Focus on gathering these details in a warm, conversational tone. After gathering all the necessary information, provide a clear and concise summary of the project details for Jonathan to review, ensuring no client concern is left unanswered
+Please answer user questions based on this information. If a user asks about getting a quote or scheduling a consultation, remind them that they can use the "Get a Quote" or "Schedule a Consultation" buttons below the chat for those specific actions.`;
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
@@ -287,57 +289,9 @@ export async function POST(req: Request) {
         },
         ...messages
       ],
-      functions: [
-        {
-          name: "provide_estimate",
-          description: "Provide an estimate for the project based on gathered information",
-          parameters: {
-            type: "object",
-            properties: {
-              projectType: {
-                type: "string",
-                enum: ["web design", "graphic design", "audio production"],
-                description: "The type of project"
-              },
-              estimatedCostRange: {
-                type: "string",
-                description: "The estimated cost range for the project"
-              },
-              estimatedTimeline: {
-                type: "string",
-                description: "The estimated timeline for the project"
-              },
-              readyForContactInfo: {
-                type: "boolean",
-                description: "Whether enough information has been collected to ask for customer details"
-              }
-            },
-            required: ["projectType", "estimatedCostRange", "estimatedTimeline", "readyForContactInfo"]
-          }
-        }
-      ],
-      function_call: "auto"
     });
 
     const result = completion.choices[0].message;
-
-    if (result.function_call && result.function_call.name === "provide_estimate") {
-      const functionArgs = JSON.parse(result.function_call.arguments);
-      const estimateMessage = `Based on the information you've provided for your ${functionArgs.projectType} project, here's an estimate:
-
-Estimated Cost Range: ${functionArgs.estimatedCostRange}
-Estimated Timeline: ${functionArgs.estimatedTimeline}
-
-Does this align with your expectations? If you'd like to proceed, I'll need some of your contact information.`;
-
-      return NextResponse.json({
-        result: {
-          role: "assistant",
-          content: estimateMessage
-        },
-        showEstimation: functionArgs.readyForContactInfo
-      });
-    }
 
     return NextResponse.json({ result });
   } catch (error) {

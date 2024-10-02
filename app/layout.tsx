@@ -103,8 +103,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </ChatProvider>
         </Theme>
         <Analytics />
-        <GoogleTagManager gtmId="G-X45GW26X65" />
       </body>
+      <GoogleTagManager gtmId="G-X45GW26X65" />
     </html>
   );
 }

@@ -15,13 +15,13 @@ export async function POST(req: Request) {
 
     // Send notification to Slack
     await slackWebhook.send({
-      text: 'New Quote Submission',
+      text: 'New Quote Request',
       blocks: [
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '*New Quote Submission*'
+            text: '*New Quote Request*'
           }
         },
         {
@@ -37,20 +37,20 @@ export async function POST(req: Request) {
             },
             {
               type: 'mrkdwn',
-              text: `*Project Type:*\n${quoteData.projectType}`
+              text: `*Phone:*\n${quoteData.phone || 'Not provided'}` // Updated to include phone
             },
             {
               type: 'mrkdwn',
-              text: `*Project Details:*\n${quoteData.projectDetails}`
+              text: `*Description:*\n${quoteData.description}`
             }
           ]
         }
       ]
     });
 
-    return NextResponse.json({ message: 'Quote submitted successfully' });
+    return NextResponse.json({ message: 'Quote request submitted successfully' });
   } catch (error) {
     console.error('Error submitting quote:', error);
-    return NextResponse.json({ error: 'Failed to submit quote' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to submit quote request' }, { status: 500 });
   }
 }

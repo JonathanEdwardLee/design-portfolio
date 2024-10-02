@@ -54,6 +54,15 @@ export function useChat() {
     }
   }, [messages]);
 
+  const resetChat = useCallback(() => {
+    setMessages([]);
+    setIsLoading(false);
+    setError(null);
+    setIsComplete(false);
+    setShowEstimation(false);
+    setCurrentStep('initial');
+  }, []);
+
   return { 
     messages, 
     sendMessage, 
@@ -63,6 +72,7 @@ export function useChat() {
     showEstimation, 
     setShowEstimation,
     currentStep,
-    setCurrentStep
+    setCurrentStep,
+    resetChat // Add this line
   };
 }
