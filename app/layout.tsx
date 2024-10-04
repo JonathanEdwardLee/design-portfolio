@@ -85,6 +85,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${gruppo.variable} font-gruppo`}>
       <body className="min-h-screen text-copper-100">
+        <GoogleTagManager gtmId="GTM-X45GW26X65" />
         <Theme
           appearance="dark"
           accentColor="cyan"
@@ -96,15 +97,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <SpaceBackground />
             <div>
               <main>{children}</main>
-              <Footer />{" "}
-              {/* Replace the old footer with the new Footer component */}
+              <Footer />
             </div>
             <ChatWrapper />
           </ChatProvider>
         </Theme>
         <Analytics />
       </body>
-      <GoogleTagManager gtmId="GTM-X45GW26X65" />
     </html>
   );
 }
