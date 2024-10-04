@@ -8,6 +8,7 @@ import ChatWrapper from "./components/ChatWrapper";
 import { ChatProvider } from "./components/ChatContext";
 import { Analytics } from "@vercel/analytics/react";
 import Footer from "./components/Footer";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const gruppo = Gruppo({
   weight: "400",
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </Theme>
         <Analytics />
       </body>
+      <GoogleTagManager gtmId="GTM-X45GW26X65" />
     </html>
   );
 }
