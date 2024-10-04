@@ -6,8 +6,8 @@ import { Gruppo } from "next/font/google";
 import { Theme } from "@radix-ui/themes";
 import ChatWrapper from "./components/ChatWrapper";
 import { ChatProvider } from "./components/ChatContext";
-import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
+import Footer from "./components/Footer";
 
 const gruppo = Gruppo({
   weight: "400",
@@ -95,16 +95,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <SpaceBackground />
             <div>
               <main>{children}</main>
-              <footer className="p-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-md text-center text-copper-300">
-                © {new Date().getFullYear()} Hoop Snake Designs
-              </footer>
+              <Footer />{" "}
+              {/* Replace the old footer with the new Footer component */}
             </div>
             <ChatWrapper />
           </ChatProvider>
         </Theme>
         <Analytics />
       </body>
-      <GoogleTagManager gtmId="G-X45GW26X65" />
     </html>
   );
 }

@@ -27,6 +27,9 @@ const nextConfig = {
     MONGODB_URI: process.env.MONGODB_URI,
     SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL,
   },
+  experimental: {
+    // Remove the googleTagManager line
+  },
 };
 
 export default nextConfig;

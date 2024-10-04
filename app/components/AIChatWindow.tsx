@@ -105,7 +105,7 @@ const AIChatWindow: React.FC<AIChatWindowProps> = ({ isOpen, onClose }) => {
   return (
     <>
       <Dialog.Root open={isOpen} onOpenChange={onClose}>
-        <Dialog.Content style={{ position: "relative" }}>
+        <Dialog.Content style={{ position: "relative", paddingBottom: "60px" }}>
           <Dialog.Title>Chat with my AI Assistant</Dialog.Title>
           <Text as="p" style={{ marginBottom: "16px" }}>
             I trained this arifical intelligence chat bot to help with anything
@@ -141,13 +141,12 @@ const AIChatWindow: React.FC<AIChatWindowProps> = ({ isOpen, onClose }) => {
                 <span
                   onClick={() =>
                     handlePromptClick(
-                      "Tell me about Jonathan's experience in web development."
+                      "Can I text or call Jonathan? What is his number?"
                     )
                   }
                   style={promptStyles}
                 >
-                  &ldquo;Tell me about Jonathan&apos;s experience in web
-                  development.&rdquo;
+                  &ldquo;Can I text or call Jonathan? What is his number?&rdquo;
                 </span>
               </li>
               <li>
@@ -191,47 +190,40 @@ const AIChatWindow: React.FC<AIChatWindowProps> = ({ isOpen, onClose }) => {
             <Button onClick={handleSend} disabled={isLoading}>
               {isLoading ? <CircularProgress size={24} /> : "Send"}
             </Button>
-            <Flex gap="2" justify="center" style={{ width: "100%" }}>
-              <Button onClick={handleGetQuote}>Get a Quote</Button>
-              <Button onClick={handleScheduleConsultation}>
-                Schedule a Consultation
-              </Button>
+            <Flex direction="column" gap="2" style={{ width: "100%" }}>
+              <Flex gap="2" justify="center" style={{ width: "100%" }}>
+                <Button onClick={handleGetQuote}>Get a Quote</Button>
+                <Button onClick={handleScheduleConsultation}>
+                  Schedule a Consultation
+                </Button>
+              </Flex>
+              <Flex justify="end" gap="2">
+                <Button
+                  onClick={handleResetChat}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "8px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <Refresh style={{ color: "white", opacity: 0.7 }} />
+                </Button>
+                <Button
+                  onClick={onClose}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "8px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <Close style={{ color: "white", opacity: 0.7 }} />
+                </Button>
+              </Flex>
             </Flex>
-          </Flex>
-          <Flex
-            justify="end"
-            gap="2"
-            style={{
-              position: "fixed",
-              bottom: "16px",
-              right: "16px",
-              zIndex: 1000,
-            }}
-          >
-            <Button
-              onClick={handleResetChat}
-              style={{
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: "8px",
-                borderRadius: "50%",
-              }}
-            >
-              <Refresh style={{ color: "white", opacity: 0.7 }} />
-            </Button>
-            <Button
-              onClick={onClose}
-              style={{
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: "8px",
-                borderRadius: "50%",
-              }}
-            >
-              <Close style={{ color: "white", opacity: 0.7 }} />
-            </Button>
           </Flex>
         </Dialog.Content>
       </Dialog.Root>

@@ -1,6 +1,7 @@
 import React from "react";
-import { Flex, Avatar } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import Button from "./Button";
+import Image from "next/image";
 
 interface FloatingChatButtonProps {
   onClick: () => void;
@@ -9,7 +10,12 @@ interface FloatingChatButtonProps {
 const FloatingChatButton: React.FC<FloatingChatButtonProps> = ({ onClick }) => (
   <Flex position="fixed" bottom="20px" right="20px" style={{ zIndex: 1000 }}>
     <Button onClick={onClick}>
-      <Avatar src="/images/radix-person-icon.svg" fallback="AI" size="2" />
+      <Image
+        src="/images/cyan-person-icon.svg"
+        alt="Chat Icon"
+        width={24}
+        height={24}
+      />
       Chat Now
     </Button>
   </Flex>
